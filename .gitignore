@@ -1,0 +1,9 @@
+#Diretorios
+obj/
+bin/
+
+#Arquivos
+*.cpp~
+*.h~
+*.txt~
+
