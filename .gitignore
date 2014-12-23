@@ -3,7 +3,9 @@ obj/
 bin/
 
 #Arquivos
-*.cpp~
-*.h~
+src/*.cpp~
+src/inc/*.h~
 *.txt~
+Makefile~
+.gitignore~
 
