@@ -1,7 +1,7 @@
 #ifndef		SRC_INC_EXCESSAO_H
 #define		SRC_INC_EXCESSAO_H
 
-#include	<excception>
+#include	<exception>
 
 class Excessao
 {
