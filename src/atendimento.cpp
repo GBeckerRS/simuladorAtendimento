@@ -2,52 +2,53 @@
 
 Atendimento::Atendimento()
 {
-	this->requisicaoEmAtendimento = 0;
+    this->requisicaoEmAtendimento = 0;
 }
 
 Atendimento::~Atendimento()
 {
 }
 
-void Atendimento::iniciaAtendimento(Requisicao& novaRequisicao, int turnoAtual)
+void Atendimento::iniciaAtendimento(Requisicao& requisicao, int turnoAtual)
 {
-	if(this->requisicaoEmAtendimento)
-	{
-		// Temporário, lançar excessão
-		return;
-	}
-	this->requisicaoEmAtendimento = &novaRequisicao;
-	(*this->requisicaoEmAtendimento).setTurnoEntrada(turnoAtual);
+    if(this->requisicaoEmAtendimento)
+    {
+        // Erro, ja existe uma requisicao em atendimento
+        return;
+    }
+    // TRATAR EXCESSAO OPERADOR NEW
+    this->requisicaoEmAtendimento = new Requisicao(requisicao);
+    this->requisicaoEmAtendimento->setTurnoEntrada(turnoAtual);
 }
 
 bool Atendimento::verificaStatusAtendimento(int turnoAtual)
 {
-	/* Verificar se requisicao em atendimento */
-	if(!this->requisicaoEmAtendimento)
-	{
-		return false;
-	}
-	else 
-	{
-		/* Verifica se encerrou o atendimento */
-		int turno = ((*(this->requisicaoEmAtendimento)).getTurnoEntrada() - turnoAtual);
-		if(turno == (*(this->requisicaoEmAtendimento)).getTempoAtendimento())
-		{
-			return true;
-		}
-	}
-	return false;
+    if(!this->requisicaoEmAtendimento)
+    {
+        return false;
+    }
+    else 
+    {
+        int turno = ((*(this->requisicaoEmAtendimento)).getTurnoEntrada() - turnoAtual);
+        if(turno == (*(this->requisicaoEmAtendimento)).getTempoAtendimento())
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
-Requisicao Atendimento::encerraAtendimento()
+Requisicao* Atendimento::encerraAtendimento()
 {
-	if(!this->requisicaoEmAtendimento)
-		// Temporário, lançar excessão
-		return *this->requisicaoEmAtendimento;
+    if(!this->requisicaoEmAtendimento)
+    {
+        // Erro, nao ha requisicao em atendimento
+        return NULL;
+    }
 
-	Requisicao* temp = this->requisicaoEmAtendimento;
-	this->requisicaoEmAtendimento = 0;
+    Requisicao* temp = this->requisicaoEmAtendimento;
+    this->requisicaoEmAtendimento = NULL;
 
-	return (*temp);
+    return temp;
 }
 
